@@ -1,0 +1,22 @@
+{
+  "name": "videos-box-system",
+  "version": "1.0.0",
+  "description": "Sistema de TV Box para gerenciamento e distribuição de vídeos",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run admin:dev\"",
+    "backend:dev": "cd backend && npm run dev",
+    "admin:dev": "cd admin-panel && npm start",
+    "build": "npm run backend:build && npm run admin:build",
+    "backend:build": "cd backend && npm run build",
+    "admin:build": "cd admin-panel && npm run build",
+    "start": "cd backend && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../admin-panel && npm install"
+  },
+  "keywords": ["tvbox", "video", "streaming", "marketing", "digital-signage"],
+  "author": "Videos Box System",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

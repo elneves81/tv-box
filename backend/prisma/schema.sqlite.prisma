@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("user") // user, admin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos
+  videos    Video[]
+  campaigns Campaign[]
+
+  @@map("users")
+}
+
+model Video {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  filename    String
+  originalName String
+  mimeType    String
+  size        Int
+  duration    Int?     // em segundos
+  thumbnail   String?
+  status      String   @default("processing") // processing, ready, error
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Relacionamento many-to-many com campanhas
+  campaigns   CampaignVideo[]
+
+  @@map("videos")
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  startDate   DateTime?
+  endDate     DateTime?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Relacionamento many-to-many com vídeos
+  videos      CampaignVideo[]
+  
+  // Relacionamento com dispositivos
+  devices     CampaignDevice[]
+
+  @@map("campaigns")
+}
+
+model CampaignVideo {
+  id         String @id @default(cuid())
+  campaignId String
+  videoId    String
+  order      Int    @default(0)
+  
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  video      Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, videoId])
+  @@map("campaign_videos")
+}
+
+model Device {
+  id          String   @id @default(cuid())
+  name        String
+  identifier  String   @unique // MAC address ou ID único
+  location    String?
+  isOnline    Boolean  @default(false)
+  lastSeen    DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  campaigns   CampaignDevice[]
+
+  @@map("devices")
+}
+
+model CampaignDevice {
+  id         String @id @default(cuid())
+  campaignId String
+  deviceId   String
+  
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  device     Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, deviceId])
+  @@map("campaign_devices")
+}
+
+model Analytics {
+  id        String   @id @default(cuid())
+  deviceId  String
+  videoId   String
+  event     String   // play, pause, complete, skip
+  timestamp DateTime @default(now())
+  metadata  String?  // JSON com dados adicionais
+
+  @@map("analytics")
+}
