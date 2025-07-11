@@ -276,7 +276,7 @@ tar -xzf uploads-backup.tar.gz
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está sob a licença ELBER NEVES. Veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ## 🆘 Suporte
 
