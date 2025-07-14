@@ -2,14 +2,53 @@
 
 Sistema completo de gerenciamento e distribuição de vídeos para dispositivos TV Box, desenvolvido com tecnologias **100% gratuitas e open source**.
 
-## 🚀 Características
+## ✅ Status do Projeto
 
-- **Painel Administrativo**: Interface web para gerenciar vídeos, campanhas e dispositivos
-- **Player TV Box**: Interface otimizada para reprodução em TVs
-- **Distribuição em Tempo Real**: Envio de conteúdo via WebSockets
-- **Processamento de Vídeo**: Conversão automática para múltiplas qualidades
-- **Analytics**: Relatórios detalhados de reprodução
-- **Multi-dispositivo**: Controle centralizado de múltiplas TVs
+**SISTEMA FUNCIONAL E INTEGRADO**
+
+- ✅ Backend funcionando (porta 3003)
+- ✅ Frontend/Admin Panel funcionando (porta 3000)
+- ✅ Banco de dados SQLite configurado
+- ✅ Autenticação JWT implementada
+- ✅ Seed com usuários criados
+- ✅ CORS configurado entre frontend e backend
+- ✅ Sistema de login completo
+
+## 🔑 Credenciais de Acesso
+
+Usuários criados no sistema:
+
+- **Admin**: `admin@videosbox.com` / `admin123`
+- **Demo**: `demo@videosbox.com` / `demo123`
+- **Elber**: `elber@videobox.com` / `elber123`
+
+## 🚀 Como Executar
+
+### 1. Backend (porta 3003)
+```bash
+cd backend
+npm install
+npm run db:seed  # Criar usuários
+npm start
+```
+
+### 2. Frontend/Admin Panel (porta 3000)
+```bash
+cd admin-panel
+npm install
+npm start
+```
+
+### 3. Acessar o sistema
+- **Painel Admin**: http://localhost:3000
+- **API Backend**: http://localhost:3003
+- **Login API**: http://localhost:3003/api/auth/login
+
+### 4. Script para liberar porta (Windows)
+```bash
+# Se a porta 3003 estiver ocupada
+./liberar_porta_3003.bat
+```
 
 ## 🛠️ Stack Tecnológica (100% Gratuita)
 
