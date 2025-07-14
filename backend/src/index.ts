@@ -83,6 +83,23 @@ app.get('/health', (req, res) => {
 
 // Rotas da API
 app.use('/api/auth', authRoutes);
+
+// Rota GET /login para teste
+app.get('/login', (req, res) => {
+  res.send(`
+    <html>
+      <head><title>Login</title></head>
+      <body>
+        <h2>Login Backend</h2>
+        <form method="POST" action="/api/auth/login">
+          <input type="email" name="email" placeholder="Email" required /><br />
+          <input type="password" name="password" placeholder="Senha" required /><br />
+          <button type="submit">Entrar</button>
+        </form>
+      </body>
+    </html>
+  `);
+});
 app.use('/api/users', authMiddleware, userRoutes);
 app.use('/api/videos', authMiddleware, videoRoutes);
 app.use('/api/campaigns', authMiddleware, campaignRoutes);
@@ -93,6 +110,21 @@ app.use('/api/upload', authMiddleware, uploadRoutes);
 // Rota para o player da TV (sem autenticação)
 app.get('/player/:deviceId', (req, res) => {
   res.sendFile(path.join(__dirname, '../../tv-player/index.html'));
+});
+
+// Rota principal para status
+app.get('/', (req, res) => {
+  res.send('API TV Box rodando!');
+});
+
+// Rota favicon.ico para evitar erro 404
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
+
+// Rota /login para teste simples
+app.get('/login', (req, res) => {
+  res.send('<h1>Página de login</h1>');
 });
 
 // Middleware de erro 404

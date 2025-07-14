@@ -70,6 +70,21 @@ app.get('/health', (req, res) => {
     });
 });
 app.use('/api/auth', auth_2.default);
+app.get('/login', (req, res) => {
+    res.send(`
+    <html>
+      <head><title>Login</title></head>
+      <body>
+        <h2>Login Backend</h2>
+        <form method="POST" action="/api/auth/login">
+          <input type="email" name="email" placeholder="Email" required /><br />
+          <input type="password" name="password" placeholder="Senha" required /><br />
+          <button type="submit">Entrar</button>
+        </form>
+      </body>
+    </html>
+  `);
+});
 app.use('/api/users', auth_1.authMiddleware, users_1.default);
 app.use('/api/videos', auth_1.authMiddleware, videos_1.default);
 app.use('/api/campaigns', auth_1.authMiddleware, campaigns_1.default);
@@ -78,6 +93,15 @@ app.use('/api/analytics', auth_1.authMiddleware, analytics_1.default);
 app.use('/api/upload', auth_1.authMiddleware, upload_1.default);
 app.get('/player/:deviceId', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../../tv-player/index.html'));
+});
+app.get('/', (req, res) => {
+    res.send('API TV Box rodando!');
+});
+app.get('/favicon.ico', (req, res) => {
+    res.status(204).end();
+});
+app.get('/login', (req, res) => {
+    res.send('<h1>Página de login</h1>');
 });
 app.use(notFound_1.notFound);
 app.use(errorHandler_1.errorHandler);

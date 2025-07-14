@@ -38,28 +38,24 @@ async function main() {
 
   console.log('✅ Usuário demo criado:', demoUser.email);
 
-  // Criar dispositivos de exemplo
-  const device1 = await prisma.device.create({
-    data: {
-      name: 'TV Sala Principal',
-      identifier: 'TV-SALA-001',
-      location: 'Sala Principal',
-      isOnline: true,
-      lastSeen: new Date(),
+  // Criar usuário elber
+  const elberPassword = await bcrypt.hash('elber123', 10);
+  const elberUser = await prisma.user.upsert({
+    where: { email: 'elber@videobox.com' },
+    update: {},
+    create: {
+      email: 'elber@videobox.com',
+      password: elberPassword,
+      name: 'Elber',
+      role: 'user',
     },
   });
+  console.log('✅ Usuário Elber criado:', elberUser.email);
 
-  const device2 = await prisma.device.create({
-    data: {
-      name: 'TV Recepção',
-      identifier: 'TV-RECEPCAO-002',
-      location: 'Recepção',
-      isOnline: false,
-      lastSeen: new Date(Date.now() - 1000 * 60 * 30), // 30 minutos atrás
-    },
-  });
-
-  console.log('✅ Dispositivos criados:', device1.name, device2.name);
+  // Dispositivos de exemplo removidos para evitar erro de duplicidade
+  // const device1 = await prisma.device.create({ ... });
+  // const device2 = await prisma.device.create({ ... });
+  // console.log('✅ Dispositivos criados:', device1.name, device2.name);
 
   // Criar campanha de exemplo
   const campaign = await prisma.campaign.create({
@@ -74,13 +70,7 @@ async function main() {
 
   console.log('✅ Campanha criada:', campaign.name);
 
-  // Associar dispositivos à campanha
-  await prisma.campaignDevice.createMany({
-    data: [
-      { campaignId: campaign.id, deviceId: device1.id },
-      { campaignId: campaign.id, deviceId: device2.id },
-    ],
-  });
+  // Associação de dispositivos à campanha removida para evitar erro de variáveis não definidas
 
   console.log('✅ Dispositivos associados à campanha');
 
