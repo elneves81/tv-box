@@ -40,13 +40,14 @@ const generateTokens = (userId: string) => {
 // @desc    Registrar usuário
 // @route   POST /api/auth/register
 // @access  Public
-router.post('/register', registerValidation, asyncHandler(async (req: Request, res: Response) => {
+router.post('/register', registerValidation, asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       errors: errors.array()
     });
+    return;
   }
 
   const { email, password, name } = req.body;
@@ -107,13 +108,14 @@ router.post('/register', registerValidation, asyncHandler(async (req: Request, r
 // @desc    Login usuário
 // @route   POST /api/auth/login
 // @access  Public
-router.post('/login', loginValidation, asyncHandler(async (req: Request, res: Response) => {
+router.post('/login', loginValidation, asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       errors: errors.array()
     });
+    return;
   }
 
   const { email, password } = req.body;

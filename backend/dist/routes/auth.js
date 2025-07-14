@@ -27,10 +27,11 @@ const generateTokens = (userId) => {
 router.post('/register', registerValidation, (0, errorHandler_1.asyncHandler)(async (req, res) => {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({
+        res.status(400).json({
             success: false,
             errors: errors.array()
         });
+        return;
     }
     const { email, password, name } = req.body;
     const existingUser = await database_1.prisma.user.findFirst({
@@ -77,10 +78,11 @@ router.post('/register', registerValidation, (0, errorHandler_1.asyncHandler)(as
 router.post('/login', loginValidation, (0, errorHandler_1.asyncHandler)(async (req, res) => {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({
+        res.status(400).json({
             success: false,
             errors: errors.array()
         });
+        return;
     }
     const { email, password } = req.body;
     const user = await database_1.prisma.user.findUnique({
