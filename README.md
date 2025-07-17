@@ -335,4 +335,4 @@ Este projeto está sob a licença ELBER NEVES. Veja o arquivo [LICENSE](LICENSE)
 
 ---
 
-**Desenvolvido com ❤️ usando tecnologias 100% gratuitas e open source**
+**ELN-SOLUÇÕES**
